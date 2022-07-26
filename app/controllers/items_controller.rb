@@ -1,9 +1,8 @@
 class ItemsController < ApplicationController
+    before_action :set_item, only: %i[ destroy update ]
     
 
     def destroy
-        #puts(params[:id])
-        @item=Item.find(params[:id])
         @item.destroy
         respond_to do |format|
             flash[:notice] = "Item was successfuly deleted"
@@ -13,7 +12,6 @@ class ItemsController < ApplicationController
     end
 
     def update
-        @item=Item.find(params[:id])
         old_quantity=@item.quantity
 
         if @item.update(quantity: params[:quantity])
@@ -25,6 +23,12 @@ class ItemsController < ApplicationController
             end
         end
         
+    end
+
+    private
+
+    def set_item
+        @item=Item.find(params[:id])
     end
 
 
