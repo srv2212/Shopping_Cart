@@ -1,0 +1,68 @@
+<h1><center><%= @cart.title %> </center></h1>
+<h3><center> Items </center></h3>
+<% @total=0%>
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Image</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+                <th scope="col">Subtotal</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @items.each do |item| %>
+                <tr>
+                    <td><%= item.title %></td>
+                    <td><%= image_tag item.img, style: 'height:10vw;width:13vw' %></td>
+                    <td>
+                        <p id = "quantity-<%= item.id %>" ><%= quantity=item.quantity %></p><br>
+                        <div class="btn-group btn-group-sm" role="group" value=>
+                            <%=button_to "Increase Quantity","", style: 'height:50px', class: 'border border-dark', id: 'inc-button', 
+                            data: {
+                                controller: "items",
+                                action: "items#updateValue",
+                                items_quantity_param: "quantity-#{item.id}",
+                                items_subtotal_param: "subtotal-#{item.id}",
+                                items_price_param: "price-#{item.id}",
+                                items_button_param: "inc-button",
+                                items_total_param: "total-#{@cart.id}"
+                            }%>
+                            <%=button_to "Decrease Quantity","", style: 'height:50px', class: 'border border-dark', id: 'dec-button',
+                            data: {
+                                controller: "items",
+                                action: "items#updateValue",
+                                items_quantity_param: "quantity-#{item.id}",
+                                items_subtotal_param: "subtotal-#{item.id}",
+                                items_price_param: "price-#{item.id}",
+                                items_button_param: "dec-button",
+                                items_total_param: "total-#{@cart.id}"
+                            }%>
+                        </div>
+                    </td>
+                    <td><strong id="price-<%=item.id%>"> <%= price=item.price %><strong></td>
+                    <td>
+                        <h3 id="subtotal-<%= item.id%>"> <%= (quantity*price) %></h3>
+                        <% @total+=(quantity*price) %>
+                        <%= button_to "Update Item","",style: "height:fit-content;width:fit-content", class: 'border border-dark',
+                            data: {
+                                controller: "items",
+                                action: "items#savingValue",
+                                items_quantity_param: "quantity-#{item.id}",
+                                items_id_param: item.id
+                            } %>
+                    </td>
+                    <td>
+                        <%= button_to "Remove Item", "items/#{item.id}", method: :delete%>
+                    </td>    
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+    Total<h2 id="total-<%= @cart.id%>"><%= @total %></h2>  
+    <div class="btn-group me-2" float="left"><%= button_to "Delete Cart","/carts/#{@cart.id}", style: "height:fit-content;width:fit-content", class: 'border border-dark', method: :delete%></div>
+
+</div>
