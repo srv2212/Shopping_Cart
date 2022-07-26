@@ -51,13 +51,12 @@ export default class extends Controller {
         event.preventDefault();
         const quantityID = event.params['quantity'];
         const itemID = event.params['id'];
-
+        const cartID = event.params['cart'];
+        
         var quantity = parseInt((document.getElementById(quantityID)).innerText)
-
-        console.log(quantity)
-
+        
         $.ajax({
-            url: "/carts/items/" + itemID,
+            url: "/carts/" + cartID +"/items/" + itemID,
             dataType: "json",
             contentType: "application/json",
             cache: false,

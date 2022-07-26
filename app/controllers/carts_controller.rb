@@ -13,6 +13,7 @@ class CartsController < ApplicationController
     def destroy
         
         @cart.destroy
+        flash[:notice]="Cart was successfully destroyed"
         redirect_to root_path
     end
 

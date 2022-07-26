@@ -52,18 +52,19 @@
                                 controller: "items",
                                 action: "items#savingValue",
                                 items_quantity_param: "quantity-#{item.id}",
-                                items_id_param: item.id
+                                items_id_param: item.id,
+                                items_cart_param: item.cart_id
                             } %>
                     </td>
                     <td>
-                        <%= button_to "Remove Item", "items/#{item.id}", method: :delete, data: {confirm: "Are you sure to remove this item"}%>
+                        <%= button_to "Remove Item", cart_item_path(@cart,item), method: :delete, data: {confirm: "Are you sure to remove this item"}%>
                     </td>    
                 </tr>
             <% end %>
         </tbody>
     </table>
-    Total<h2 id="total-<%= @cart.id%>"><%= @total %></h2>  
-    <div class="btn-group me-2" float="left"><%= button_to "Delete Cart","/carts/#{@cart.id}", style: "height:fit-content;width:fit-content", class: 'border border-dark', method: :delete ,
+    Total<h2 id="total-<%= @cart.id%>"><%= @cart.total %></h2>  
+    <div class="btn-group me-2" float="left"><%= button_to "Delete Cart",cart_path(@cart), style: "height:fit-content;width:fit-content", class: 'border border-dark', method: :delete ,
                                                 data: { confirm: "Are you sure?"}%></div>
 
 </div>
