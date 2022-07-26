@@ -16,11 +16,12 @@
   </head>
 
   <body>
-    <header>
-      <%= render 'layouts/alerts' %>
-    </header>
-      <main>
+      <div class="container">
+      
+        <span><%= flash[:notice] %></span>
+        <span><%= flash[:alert] %></span>
         <%= yield %>
-      </main>
+
+      </div>
   </body>
 </html>

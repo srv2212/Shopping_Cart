@@ -6,14 +6,13 @@ class ItemsController < ApplicationController
         @item=Item.find(params[:id])
         @item.destroy
         respond_to do |format|
-            format.html { redirect_to "/carts/#{params[:id]}", notice: 'Successfully Deleted '}
+            flash[:notice] = "Item was successfuly deleted"
+            format.html { redirect_to "/carts/#{params[:id]}"}
         end
 
     end
 
     def update
-        puts "="*100
-        puts params[:quantity]
         @item=Item.find(params[:id])
         old_quantity=@item.quantity
 
@@ -21,7 +20,7 @@ class ItemsController < ApplicationController
             cart=Cart.find(@item.cart_id)
             cart.update(total: cart.total-(old_quantity*@item.price)+(@item.quantity*@item.price))
             respond_to do |format|
-                format.html { redirect_to "/carts/#{params[:id]}",notice: "Item was successfully destroyed" }
+                flash[:notice]="Item was successfully updated"
                 format.json { render json: {status: 200}}
             end
         end
